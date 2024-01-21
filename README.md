@@ -1,3 +1,6 @@
+# My EC2 instance Name is sunilTM
+
+
 # Travel Memory
 
 `.env` file to work with the backend:
