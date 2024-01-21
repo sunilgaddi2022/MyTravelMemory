@@ -14,7 +14,7 @@ jobs:
       - name: Checking out code on Runner
         uses: actions/checkout@v4
         
-      - name: Login and update the EC2 instance
+      - name: Login and update the EC2 instance and run commands
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -26,7 +26,7 @@ jobs:
             whoami
             sudo apt-get update -y
 
-      - name: copy file via ssh password
+      - name: Copy file via SSH password
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
