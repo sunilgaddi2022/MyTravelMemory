@@ -1,1 +1,39 @@
+name: Deploy to EC2 Instance
 
+on: 
+  push:
+    branches: 
+      - main
+
+ 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out code on Runner
+        uses: actions/checkout@v4
+        
+      - name: Login and update the EC2 instance
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_TM }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY_TM }}
+          port: 22
+          script: |
+            pwd
+            whoami
+            sudo apt-get update -y
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST_TM }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY_TM }}
+          port: 22
+          source: ./
+          target: /home/ubuntu
+
+     
